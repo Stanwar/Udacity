@@ -61,12 +61,23 @@ class Vector(object):
     def angle(self, v, angType):
         v1 = v.normalize()
         v2 = self.normalize()
-
-        angle_rad = math.acos(v1.dotProduct(v2))
+  
+        angle_rad = math.acos(round(v1.dotProduct(v2),3))
         if angType == 'DEGREES':
             return angle_rad * (180./math.pi)
         else : 
             return angle_rad
+
+    def isParallel(self, v):
+        return (self.isZero() or 
+                v.isZero() or 
+                self.angle(v,'RADIANS') == 0)
+
+    def isOrthogonal(self, v, tolerance = 1e-10):
+        return abs(self.dotProduct(v)) < tolerance
+    
+    def isZero(self, tolerance= 1e-10):
+        return self.magnitude() < tolerance
 
 ## Addition 
 vector1 = Vector([8.218, -9.341])
@@ -109,3 +120,8 @@ print(vector14.angle(vector15, 'RADIANS'))
 vector16 = Vector([7.35,0.221,5.188])
 vector17 = Vector([2.751,8.259,3.985])
 print(vector16.angle(vector17, 'DEGREES'))
+
+## Parallelism and Orthogonality
+vector18 = Vector([-7.579, -7.88])
+vector19 = Vector([22.737, 23.64])
+print(vector18.isParallel(vector19))
