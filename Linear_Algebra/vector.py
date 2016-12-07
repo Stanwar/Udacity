@@ -46,9 +46,28 @@ class Vector(object):
         try : 
             mag = self.magnitude()
             normal = self.scalar(1/mag)
-            return normal
+            return Vector(normal)
         except ZeroDivisionError:
             raise Exception('Cannot normalize the zero vector')
+    
+    def dotProduct(self,v):
+        ans = 0
+        try:
+            ans = [x*y for x, y in zip(self.coordinates, v.coordinates)]
+            return sum(ans)
+        except ZeroDivisionError:
+            raise Exception('Cannot calculate dot product for zero vector')
+    
+    def angle(self, v, angType):
+        v1 = v.normalize()
+        v2 = self.normalize()
+
+        rad = math.acos(v1.dotProduct(v2))
+        if angType == 'DEGREES':
+            
+            return rad * (180./math.pi)
+        else : 
+            return rad
 
 ## Addition 
 vector1 = Vector([8.218, -9.341])
@@ -75,3 +94,19 @@ vector8 = Vector([5.581, -2.136])
 print(vector8.normalize())
 vector9 = Vector([1.996, 3.108, -4.554])
 print(vector9.normalize())
+
+## Dot Product of the vectors
+vector10 = Vector([7.887, 4.138])
+vector11 = Vector([-8.802, 6.776])
+print(vector11.dotProduct(vector10))
+vector12 = Vector([-5.955,-4.904,-1.874])
+vector13 = Vector([-4.496, -8.755, 7.103])
+print(vector12.dotProduct(vector13))
+
+## Cos angle between the vectors
+vector14 = Vector([3.183, -7.627])
+vector15 = Vector([-2.668, 5.319])
+print(vector14.angle(vector15, 'RADIANS'))
+vector16 = Vector([7.35,0.221,5.188])
+vector17 = Vector([2.751,8.259,3.985])
+print(vector16.angle(vector17, 'DEGREES'))
