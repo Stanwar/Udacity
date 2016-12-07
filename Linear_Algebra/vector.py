@@ -62,12 +62,11 @@ class Vector(object):
         v1 = v.normalize()
         v2 = self.normalize()
 
-        rad = math.acos(v1.dotProduct(v2))
+        angle_rad = math.acos(v1.dotProduct(v2))
         if angType == 'DEGREES':
-            
-            return rad * (180./math.pi)
+            return angle_rad * (180./math.pi)
         else : 
-            return rad
+            return angle_rad
 
 ## Addition 
 vector1 = Vector([8.218, -9.341])
