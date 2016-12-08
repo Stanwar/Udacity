@@ -78,7 +78,17 @@ class Vector(object):
     
     def isZero(self, tolerance= 1e-10):
         return self.magnitude() < tolerance
+    
+    def projection(self):
+        return 1
 
+    def parallel(self,v):
+        u = v.normalize()
+        w = self.dotProduct(u)
+        return Vector(u.scalar(w))
+    
+    def orthogonal(self,v):
+        return self.substraction(self.parallel(v))
 ## Addition 
 vector1 = Vector([8.218, -9.341])
 vector2 = Vector([-1.129, 2.111])
@@ -125,3 +135,8 @@ print(vector16.angle(vector17, 'DEGREES'))
 vector18 = Vector([-7.579, -7.88])
 vector19 = Vector([22.737, 23.64])
 print(vector18.isParallel(vector19))
+
+## Projection Vector
+vector20 = Vector([3.039, 1.879])
+vector21 = Vector([0.825, 2.036])
+print(vector20.parallel(vector21))
